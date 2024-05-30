@@ -161,12 +161,14 @@ public class Ihm {
         do {
             System.out.println("0/ Pour revenir au menu principal");
             System.out.println("1/ Enregistrer une vente");
-            System.out.println("2/ Afficher les ventes");
+            System.out.println("2/ Finaliser une vente");
+            System.out.println("3/ Afficher les ventes");
 
             choixMenuVente = scanner.nextLine();
             switch (choixMenuVente) {
                 case "1" -> enregistrerVente();
-                case "2" -> affichageVentes();
+                case "2" -> finaliserVente();
+                case "3" -> affichageVentes();
                 default -> System.out.println("choix invalide");
             }
         }while (!choixMenuVente.equals("0"));
@@ -185,6 +187,16 @@ public class Ihm {
         boolean resultat = magasinService.enregistrerVente(vente, idArticle, nomClient);
         if (resultat) {
             System.out.println("Vente effectuée");
+        }else System.out.println("Erreur lors de la vente");
+    }
+
+    private void finaliserVente(){
+        System.out.println("Entrez l'id de la vente à finaliser");
+        int idVente = scanner.nextInt();
+        scanner.nextLine();
+        boolean resultat = magasinService.modifierEtatVente(idVente, EtatVente.FINALISEE);
+        if (resultat) {
+            System.out.println("Vente finalisée");
         }else System.out.println("Erreur lors de la vente");
     }
 

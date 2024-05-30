@@ -124,6 +124,18 @@ public class MagasinServiceOld {
 
     }
 
+    public boolean modifierEtatVente(int idVente, EtatVente etatVente){
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+        Query<Vente> query = session.createQuery("update Vente set etat = :etatVente where id = :id");
+        query.setParameter("etatVente", etatVente);
+        query.setParameter("id", idVente);
+        int nbEtatVente = query.executeUpdate();
+        session.getTransaction().commit();
+        session.close();
+        return nbEtatVente > 0;
+    }
+
     public List<Vente> listeVenteParEtat(EtatVente etatVente){
         session = sessionFactory.openSession();
         Query<Vente> venteQuery = session.createQuery("from Vente where etat = :etat", Vente.class);
