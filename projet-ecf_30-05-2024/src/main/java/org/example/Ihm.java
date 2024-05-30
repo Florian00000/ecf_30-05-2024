@@ -139,10 +139,12 @@ public class Ihm {
         do {
             System.out.println("0/ Pour revenir au menu principal");
             System.out.println("1/ Enregistrer une vente");
+            System.out.println("2/ Afficher les ventes");
 
             choixMenuVente = scanner.nextLine();
             switch (choixMenuVente) {
                 case "1" -> enregistrerVente();
+                case "2" -> affichageVentes();
                 default -> System.out.println("choix invalide");
             }
         }while (!choixMenuVente.equals("0"));
@@ -162,5 +164,28 @@ public class Ihm {
         if (resultat) {
             System.out.println("Vente effectuée");
         }else System.out.println("Erreur lors de la vente");
+    }
+
+    private void affichageVentes(){
+        String choixCategorie;
+        EtatVente etatVente = null;
+        do {
+            System.out.println("Menu Affichage des ventes");
+            System.out.println("1/ Afficher les ventes en cours");
+            System.out.println("2/ Afficher les ventes finalisées");
+            System.out.println("3/ Afficher les ventes annulées");
+            choixCategorie = scanner.nextLine();
+            switch (choixCategorie){
+                case "1" -> etatVente = EtatVente.ENCOURS;
+                case "2" -> etatVente = EtatVente.FINALISEE;
+                case "3" -> etatVente = EtatVente.ANNULEE;
+                default -> System.out.println("choix invalide");
+            }
+
+        }while (!choixCategorie.equals("1") && !choixCategorie.equals("2") && !choixCategorie.equals("3"));
+        List<Vente> listeVentes = magasinService.listeVenteParEtat(etatVente);
+        for (Vente vente : listeVentes){
+            System.out.println(vente);
+        }
     }
 }

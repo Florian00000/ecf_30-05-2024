@@ -3,6 +3,7 @@ package org.example.service;
 import org.example.entities.Article;
 import org.example.entities.Client;
 import org.example.entities.Vente;
+import org.example.utils.EtatVente;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -114,7 +115,15 @@ public class MagasinServiceOld {
             return false;
         }
 
+    }
 
+    public List<Vente> listeVenteParEtat(EtatVente etatVente){
+        session = sessionFactory.openSession();
+        Query<Vente> venteQuery = session.createQuery("from Vente where etat = :etat", Vente.class);
+        venteQuery.setParameter("etat", etatVente);
+        List<Vente> ventes = venteQuery.list();
+        session.close();
+        return ventes;
     }
 
 
