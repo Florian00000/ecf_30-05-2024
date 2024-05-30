@@ -20,6 +20,8 @@ public class Vente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private EtatVente etat;
+    @Column(name = "nombre_articles")
+    private int nbArticles;
 
     @ManyToOne
     @JoinColumn(name = "article_id")
