@@ -111,10 +111,12 @@ public class Ihm {
         do {
             System.out.println("0/ Pour revenir au menu principal");
             System.out.println("1/ Ajouter un client");
+            System.out.println("2/ Historique des achats");
 
             choixMenuClient = scanner.nextLine();
             switch (choixMenuClient) {
                 case "1" -> ajouterClient();
+                case "2" -> historiqueVenteParClient();
                 default -> System.out.println("choix invalide");
             }
         }while (!choixMenuClient.equals("0"));
@@ -131,6 +133,15 @@ public class Ihm {
         if (resultat) {
             System.out.println(client + " ajouté avec succès");
         }else System.out.println("Erreur lors de l'ajout");
+    }
+
+    private void historiqueVenteParClient(){
+        System.out.println("Entrez le nom du client");
+        String nomClient = scanner.nextLine();
+        List<Vente> ventes = magasinService.ListVenteParClient(nomClient);
+        for (Vente vente: ventes){
+            System.out.println(vente);
+        }
     }
 
     //Vente

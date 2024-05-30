@@ -126,5 +126,17 @@ public class MagasinServiceOld {
         return ventes;
     }
 
+    public List<Vente> ListVenteParClient(String nomClient){
+        session = sessionFactory.openSession();
+        Query<Client> queryClient = session.createQuery("from Client where nom = :nomClient", Client.class);
+        queryClient.setParameter("nomClient", nomClient);
+        Client client = queryClient.getSingleResult();
+        Query<Vente> queryVente = session.createQuery("from Vente where client = :client", Vente.class);
+        queryVente.setParameter("client", client);
+        List<Vente> ventes = queryVente.list();
+        session.close();
+        return ventes;
+    }
+
 
 }
