@@ -3,8 +3,10 @@ package org.example;
 
 import org.example.entities.Article;
 import org.example.entities.Client;
+import org.example.entities.Vente;
 import org.example.service.MagasinServiceOld;
 import org.example.utils.CategorieArticle;
+import org.example.utils.EtatVente;
 
 import java.util.Scanner;
 
@@ -27,6 +29,7 @@ public class Ihm {
             switch (choix) {
                 case "1" -> menuArticles();
                 case "2" -> menuClients();
+                case "3" -> menuVente();
                 default -> System.out.println("choix invalide");
             }
         }while (!choix.equals("0"));
@@ -39,6 +42,7 @@ public class Ihm {
         System.out.println("0/ Pour quitter le programme");
         System.out.println("1/ Menu articles");
         System.out.println("2/ Menu client");
+        System.out.println("3/ Menu Vente");
     }
 
     //Articles
@@ -117,5 +121,36 @@ public class Ihm {
         if (resultat) {
             System.out.println(client + " ajouté avec succès");
         }else System.out.println("Erreur lors de l'ajout");
+    }
+
+    //Vente
+    private void menuVente(){
+        String choixMenuVente;
+        do {
+            System.out.println("0/ Pour revenir au menu principal");
+            System.out.println("1/ Enregistrer une vente");
+
+            choixMenuVente = scanner.nextLine();
+            switch (choixMenuVente) {
+                case "1" -> enregistrerVente();
+                default -> System.out.println("choix invalide");
+            }
+        }while (!choixMenuVente.equals("0"));
+    }
+
+    private void enregistrerVente(){
+        System.out.println("Entrez l'id de l'article");
+        int idArticle = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Entrez le nom du client");
+        String nomClient = scanner.nextLine();
+        System.out.println("Entre le nombre d'articles");
+        int nbArticles = scanner.nextInt();
+        scanner.nextLine();
+        Vente vente = Vente.builder().etat(EtatVente.ENCOURS).nbArticles(nbArticles).build();
+        boolean resultat = magasinService.enregistrerVente(vente, idArticle, nomClient);
+        if (resultat) {
+            System.out.println("Vente effectuée");
+        }else System.out.println("Erreur lors de la vente");
     }
 }

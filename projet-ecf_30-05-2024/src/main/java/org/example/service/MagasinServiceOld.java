@@ -2,6 +2,7 @@ package org.example.service;
 
 import org.example.entities.Article;
 import org.example.entities.Client;
+import org.example.entities.Vente;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -86,5 +87,35 @@ public class MagasinServiceOld {
         session.close();
         return true;
     }
+
+    //Vente
+    public boolean enregistrerVente(Vente vente, int idArticle, String nomClient){
+        session = sessionFactory.openSession();
+        Article article = session.get(Article.class, idArticle);
+        Query<Client> queryClient = session.createQuery("from Client where nom = :nomClient", Client.class);
+        queryClient.setParameter("nomClient", nomClient);
+        Client client = queryClient.getSingleResult();
+        vente.setClient(client);
+        vente.setArticle(article);
+        int nbArticlesVendu = vente.getNbArticles();
+
+        if(nbArticlesVendu < article.getStock()){
+            session.beginTransaction();
+            Query queryArticle = session.createQuery("update Article set stock = :stock where id = :id");
+            queryArticle.setParameter("stock", article.getStock() - nbArticlesVendu);
+            queryArticle.setParameter("id", idArticle);
+            queryArticle.executeUpdate();
+            session.save(vente);
+            session.getTransaction().commit();
+            session.close();
+        return true;
+        }else {
+            System.out.println("Vente impossible");
+            return false;
+        }
+
+
+    }
+
 
 }
