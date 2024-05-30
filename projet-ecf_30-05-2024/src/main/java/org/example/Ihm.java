@@ -52,12 +52,14 @@ public class Ihm {
         do {
             System.out.println("0/ Pour revenir au menu principal");
             System.out.println("1/ Ajouter un article");
-            System.out.println("2/ Voir les articles en stock1");
+            System.out.println("2/ Voir les articles en stock");
+            System.out.println("3/ Supprimer un article");
 
             choixMenuArticle = scanner.nextLine();
             switch (choixMenuArticle) {
                 case "1" -> ajouterArticle();
                 case "2" -> articlesEnStock();
+                case "3" -> supprimerArticle();
                 default -> System.out.println("choix invalide");
             }
         }while (!choixMenuArticle.equals("0"));
@@ -103,6 +105,15 @@ public class Ihm {
         for (Article article: articlesEnStock){
             System.out.println(article);
         }
+    }
+
+    private void supprimerArticle(){
+        System.out.println("Entrez l'id de l'article à supprimer");
+        int id = scanner.nextInt();
+        boolean result = magasinService.supprimerArticleParId(id);
+        if (result){
+            System.out.println("Suppression effectuée avec succès!");
+        }else System.out.println("Erreur lors de la suppression");
     }
 
     //Clients

@@ -11,6 +11,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MagasinServiceOld {
@@ -48,13 +49,19 @@ public class MagasinServiceOld {
         return true;
     }
 
-    public boolean supprimerArticle(Article article){
+    public boolean supprimerArticleParId(int id){
+        Article article = articleParId(id);
         session = sessionFactory.openSession();
         session.beginTransaction();
-        session.delete(article);
+        Query queryVente = session.createQuery("delete from Vente where article = :article");
+        queryVente.setParameter("article", article);
+        queryVente.executeUpdate();
+        Query queryArticle = session.createQuery("delete from Article where id = :id");
+        queryArticle.setParameter("id", id);
+        int resultArticle = queryArticle.executeUpdate();
         session.getTransaction().commit();
         session.close();
-        return true;
+        return resultArticle > 0;
     }
 
     public Article articleParId(int id){
@@ -128,9 +135,14 @@ public class MagasinServiceOld {
 
     public List<Vente> ListVenteParClient(String nomClient){
         session = sessionFactory.openSession();
-        Query<Client> queryClient = session.createQuery("from Client where nom = :nomClient", Client.class);
-        queryClient.setParameter("nomClient", nomClient);
-        Client client = queryClient.getSingleResult();
+        Client client = null;
+        try {
+            Query<Client> queryClient = session.createQuery("from Client where nom = :nomClient", Client.class);
+            queryClient.setParameter("nomClient", nomClient);
+            client = queryClient.getSingleResult();
+        }catch (Exception e){
+            System.out.println(" Client non trouvé ");
+        }
         Query<Vente> queryVente = session.createQuery("from Vente where client = :client", Vente.class);
         queryVente.setParameter("client", client);
         List<Vente> ventes = queryVente.list();
