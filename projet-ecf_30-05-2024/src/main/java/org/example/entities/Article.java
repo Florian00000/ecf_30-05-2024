@@ -26,4 +26,16 @@ public class Article {
 
     @OneToMany(mappedBy = "article")
     private List<Vente> ventes;
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", categorie=" + categorie +
+                ", taille='" + taille + '\'' +
+                ", prix=" + prix +
+                ", stock=" + stock +
+                '}';
+    }
 }

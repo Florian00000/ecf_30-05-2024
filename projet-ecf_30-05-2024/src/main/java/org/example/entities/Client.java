@@ -23,4 +23,13 @@ public class Client {
 
     @OneToMany(mappedBy = "client")
     private List<Vente> ventes;
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

@@ -8,6 +8,7 @@ import org.example.service.MagasinServiceOld;
 import org.example.utils.CategorieArticle;
 import org.example.utils.EtatVente;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Ihm {
@@ -51,10 +52,12 @@ public class Ihm {
         do {
             System.out.println("0/ Pour revenir au menu principal");
             System.out.println("1/ Ajouter un article");
+            System.out.println("2/ Voir les articles en stock1");
 
             choixMenuArticle = scanner.nextLine();
             switch (choixMenuArticle) {
                 case "1" -> ajouterArticle();
+                case "2" -> articlesEnStock();
                 default -> System.out.println("choix invalide");
             }
         }while (!choixMenuArticle.equals("0"));
@@ -93,6 +96,13 @@ public class Ihm {
         if (resultat) {
             System.out.println(article + " ajouté avec succès");
         }else System.out.println("Erreur lors de l'ajout");
+    }
+
+    private void articlesEnStock(){
+        List<Article> articlesEnStock = magasinService.listeArticlesEnStock();
+        for (Article article: articlesEnStock){
+            System.out.println(article);
+        }
     }
 
     //Clients
