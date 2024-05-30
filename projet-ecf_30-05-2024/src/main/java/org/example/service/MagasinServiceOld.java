@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.entities.Article;
+import org.example.entities.Client;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -76,6 +77,14 @@ public class MagasinServiceOld {
         return articles;
     }
 
-
+    //Client
+    public boolean ajouterClient(Client client){
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.save(client);
+        session.getTransaction().commit();
+        session.close();
+        return true;
+    }
 
 }

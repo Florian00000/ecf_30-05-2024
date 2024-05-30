@@ -2,6 +2,7 @@ package org.example;
 
 
 import org.example.entities.Article;
+import org.example.entities.Client;
 import org.example.service.MagasinServiceOld;
 import org.example.utils.CategorieArticle;
 
@@ -25,6 +26,7 @@ public class Ihm {
             choix = scanner.nextLine();
             switch (choix) {
                 case "1" -> menuArticles();
+                case "2" -> menuClients();
                 default -> System.out.println("choix invalide");
             }
         }while (!choix.equals("0"));
@@ -36,8 +38,10 @@ public class Ihm {
     private void menu(){
         System.out.println("0/ Pour quitter le programme");
         System.out.println("1/ Menu articles");
+        System.out.println("2/ Menu client");
     }
 
+    //Articles
     private void menuArticles(){
         String choixMenuArticle;
         do {
@@ -87,4 +91,31 @@ public class Ihm {
         }else System.out.println("Erreur lors de l'ajout");
     }
 
+    //Clients
+    private void menuClients(){
+        String choixMenuClient;
+        do {
+            System.out.println("0/ Pour revenir au menu principal");
+            System.out.println("1/ Ajouter un client");
+
+            choixMenuClient = scanner.nextLine();
+            switch (choixMenuClient) {
+                case "1" -> ajouterClient();
+                default -> System.out.println("choix invalide");
+            }
+        }while (!choixMenuClient.equals("0"));
+    }
+
+    private void ajouterClient(){
+        System.out.println("Entrez le nom du client");
+        String nom = scanner.nextLine();
+        System.out.println("Entrez le mail du client");
+        String mail = scanner.nextLine();
+        Client client = Client.builder().nom(nom).email(mail).build();
+
+        boolean resultat = magasinService.ajouterClient(client);
+        if (resultat) {
+            System.out.println(client + " ajouté avec succès");
+        }else System.out.println("Erreur lors de l'ajout");
+    }
 }
