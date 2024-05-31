@@ -8,6 +8,7 @@ Système de gestion d'inventaire pour un magasin de vêtements intéragissant gr
 - [Installation](#installation)
 - [Utilisation](#utilisation)
 - [Structure](#structure-du-projet)
+- [Annexes](#annexes)
 
 ##  Fonctionnalités
 
@@ -51,10 +52,18 @@ Suivez les instructions à l'écran pour naviguer dans les menus et utiliser les
 ## Structure du Projet
 
 - org.example.service
-    - `MagasinServiceOld`: Fournit les méthodes pour gérer les articles, les clients ou les ventes, et intéragir avec la BDD.
+
+    - `MagasinServiceOld`: Fournit les méthodes pour gérer les articles, les clients ou les ventes, et intéragir avec la BDD.  
 - org.example.entities
     - `Article`: Entité représentant un article dans le magasin.
     - `Client`: Entité représentant un client.
     - `Vente`: Entité représentant une vente (`article_client` pour la table dans la BDD).
 - org.example
     - `Ihm`: Inbterface utilisateur permettant d'interagir avec le service du magasin.
+
+## Annexes
+
+- [MCD](https://github.com/Florian00000/ecf_30-05-2024/blob/main/MCD_ecf.jpg) 
+- [MLD](https://github.com/Florian00000/ecf_30-05-2024/blob/main/MLD_ecf.jpg) 
+- [Sujet](https://github.com/Florian00000/ecf_30-05-2024/blob/main/sujet-ecf-30-05-2024.pdf)
+    
